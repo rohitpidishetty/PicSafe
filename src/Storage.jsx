@@ -1,5 +1,5 @@
 import { Directory, Filesystem } from '@capacitor/filesystem'
-import { IonHeader, IonImg, IonLoading, IonPage, IonTitle,  IonToolbar, useIonLoading, IonFooter, IonButton, IonButtons } from '@ionic/react';
+import { IonHeader, IonImg, IonLoading, IonPage, IonTitle,  IonToolbar,  IonFooter, IonButton, IonButtons } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import "./Layout.css";
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +71,7 @@ function Storage() {
 
       <center>
 
-        {loading && <img style={{
+        {loading && <img alt='' style={{
           textAlign: "center",
           width: "10%"
         }} src='loader.svg' />}
