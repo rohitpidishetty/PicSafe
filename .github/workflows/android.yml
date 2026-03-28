@@ -11,13 +11,20 @@ jobs:
     steps:
       # 1. Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Setup NodeJS >=22
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+            java-version: 17
+            distribution: temurin
 
       # 3. Install npm packages
       - name: Install dependencies
@@ -37,12 +44,6 @@ jobs:
         
       - name: Make Gradle Wrapper Executable
         run: chmod +x android/gradlew
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-            java-version: 17
-            distribution: temurin
 
       # 7. Build Android APK
       - name: Build APK
