@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IonButton, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonNavLink, IonPage, IonTitle, IonToolbar, setupIonicReact, useIonLoading } from '@ionic/react';
+import { IonButton, IonInput, IonItem,  IonList,   IonPage,   setupIonicReact, useIonLoading } from '@ionic/react';
 import { useNavigate } from 'react-router-dom';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
@@ -24,7 +24,7 @@ function Login() {
         directory: Directory.Data
       });
       const user = JSON.parse(atob(file.data))
-      if (email !== user.email || password != user.password) {
+      if (email !== user.email || password !== user.password) {
         alert("Invalid credentials");
         return;
       }
@@ -67,7 +67,7 @@ function Login() {
             marginTop: "5%",
             textAlign: "right",
           }}>
-            <a style={{
+            <a href="#" style={{
               color: "blue",
             }}>Forgot password?</a>
           </div>
@@ -89,7 +89,7 @@ function Login() {
             marginTop: "5%",
           }}>
 
-            <p style={{ color: "black" }}>Don't have an account? <a style={{ color: "blue" }} onClick={() => navigate("/signup")}>Sign Up</a></p>
+            <p style={{ color: "black" }}>Dont have an account? <a href='#' style={{ color: "blue" }} onClick={() => navigate("/signup")}>Sign Up</a></p>
           </div>
         </IonList>
       </center>
