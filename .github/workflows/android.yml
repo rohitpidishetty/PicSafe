@@ -47,25 +47,31 @@ jobs:
 
       # 8. Remove old Gradle caches
       - name: Remove Gradle cache
-        run: rm -rf ~/.gradle/caches/
+        run: rm -rf $GITHUB_WORKSPACE/.gradle
 
-      # 9. Force all Gradle subprojects to use Java 17
+      # 9. Force Gradle to use Java 17
       - name: Force Gradle Java Version
-        run: |
-          echo "org.gradle.java.home=$JAVA_HOME" >> android/gradle.properties
-          echo "subprojects { tasks.withType(JavaCompile) { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 } }" >> android/build.gradle
+        run: echo "org.gradle.java.home=$JAVA_HOME" >> android/gradle.properties
 
-      # 10. Clean Android build
+      # 10. Clean Android build (isolated cache)
       - name: Clean Android Build
         run: |
           cd android
-          ./gradlew clean --no-daemon -Dorg.gradle.java.home=$JAVA_HOME -g $GITHUB_WORKSPACE/.gradle --max-workers=1
+          ./gradlew clean \
+            --no-daemon \
+            --max-workers=1 \
+            -Dorg.gradle.java.home=$JAVA_HOME \
+            -g $GITHUB_WORKSPACE/.gradle
 
-      # 11. Build release APK
+      # 11. Build release APK (isolated cache)
       - name: Build Release APK
         run: |
           cd android
-          ./gradlew assembleRelease --no-daemon -Dorg.gradle.java.home=$JAVA_HOME -g $GITHUB_WORKSPACE/.gradle --max-workers=1
+          ./gradlew assembleRelease \
+            --no-daemon \
+            --max-workers=1 \
+            -Dorg.gradle.java.home=$JAVA_HOME \
+            -g $GITHUB_WORKSPACE/.gradle
 
       # 12. Upload APK artifact
       - name: Upload APK
