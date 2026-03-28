@@ -1,0 +1,2 @@
+"use strict";(globalThis.webpackChunkring=globalThis.webpackChunkring||[]).push([[851],{67851(a,e,r){r.d(e,{ShareWeb:()=>n});var t=r(45403);class n extends t.E_{async canShare(){return"undefined"!==typeof navigator&&navigator.share?{value:!0}:{value:!1}}async share(a){if("undefined"===typeof navigator||!navigator.share)throw this.unavailable("Share API not available in this browser");return await navigator.share({title:a.title,text:a.text,url:a.url}),{}}}}}]);
+//# sourceMappingURL=851.a3c0ef2a.chunk.js.map
