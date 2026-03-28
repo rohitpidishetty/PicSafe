@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import { IonHeader, IonImg, IonPage, IonTitle, IonToast, IonToolbar, IonFooter, IonItem, IonButton, IonButtons, setupIonicReact } from '@ionic/react';
+import { IonHeader, IonImg, IonPage, IonTitle,  IonToolbar, IonFooter,  IonButton, IonButtons, setupIonicReact } from '@ionic/react';
 import { useNavigate } from 'react-router-dom';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
