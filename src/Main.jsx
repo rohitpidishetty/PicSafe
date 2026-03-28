@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { IonBadge, IonButton, IonButtons, IonCard, IonFooter, IonHeader, IonImg, IonItemOption, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
+import {  IonButton, IonButtons, IonCard, IonFooter, IonHeader,   IonPage,   IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { v4 as uuid } from 'uuid';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./Layout.css";
 import { Directory, Filesystem } from '@capacitor/filesystem';
