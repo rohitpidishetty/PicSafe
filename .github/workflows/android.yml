@@ -34,6 +34,9 @@ jobs:
       # 6. Sync Capacitor
       - name: Capacitor Sync
         run: npx cap sync android
+        
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x android/gradlew
 
       # 7. Build Android APK
       - name: Build APK
