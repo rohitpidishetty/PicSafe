@@ -38,6 +38,12 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x android/gradlew
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+            java-version: 17
+            distribution: temurin
+
       # 7. Build Android APK
       - name: Build APK
         run: |
