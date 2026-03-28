@@ -67,7 +67,7 @@ function Login() {
             marginTop: "5%",
           }}>
 
-            <p style={{ color: "black" }}>Have an account? <a href='#' style={{ color: "blue" }} onClick={() => navigate("/")}>Sign In</a></p>
+            <p style={{ color: "black" }}>Have an account? <a href='/' style={{ color: "blue" }} onClick={() => navigate("/")}>Sign In</a></p>
           </div>
         </IonList>
       </center>
