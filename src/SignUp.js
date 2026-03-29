@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { IonButton,   IonInput, IonItem,  IonList,  IonPage,   setupIonicReact } from '@ionic/react';
+import { IonButton, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { useNavigate } from 'react-router-dom';
+import { EyeOutline } from 'react-ionicons'
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
 setupIonicReact({
@@ -67,7 +68,7 @@ function Login() {
             marginTop: "5%",
           }}>
 
-            <p style={{ color: "black" }}>Have an account? <a href='/' style={{ color: "blue" }} onClick={() => navigate("/")}>Sign In</a></p>
+            <p style={{ color: "black" }}>Have an account? <a style={{ color: "blue" }} onClick={() => navigate("/")}>Sign In</a></p>
           </div>
         </IonList>
       </center>

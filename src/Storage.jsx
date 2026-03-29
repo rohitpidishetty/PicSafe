@@ -1,5 +1,5 @@
 import { Directory, Filesystem } from '@capacitor/filesystem'
-import { IonHeader, IonImg, IonLoading, IonPage, IonTitle,  IonToolbar,  IonFooter, IonButton, IonButtons } from '@ionic/react';
+import { IonHeader, IonImg, IonLoading, IonPage, IonTitle, IonToast, IonToolbar, useIonLoading, IonFooter, IonButton, IonButtons } from '@ionic/react';
 import React, { useEffect, useState } from 'react'
 import "./Layout.css";
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ function Storage() {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-
+  const [present, dismiss] = useIonLoading();
 
 
   function display(image, name) {
@@ -71,14 +71,14 @@ function Storage() {
 
       <center>
 
-        {loading && <img alt='' style={{
+        {loading && <img style={{
           textAlign: "center",
           width: "10%"
         }} src='loader.svg' />}
       </center>
       <div className='grid-view'>
         <IonLoading message="Loading images" />
-        {!loading && state && images.map((image, key) => <IonImg alt='img' onClick={async (e) => {
+        {!loading && state && images.map((image, key) => <IonImg onClick={async (e) => {
           e.target.classList.add('zoom')
           setTimeout(() => {
             e.target.classList.toggle('zoom');
