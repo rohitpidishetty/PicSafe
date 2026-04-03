@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { IonButton, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNavLink, IonPage, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { useNavigate } from 'react-router-dom';
-import { EyeOutline } from 'react-ionicons'
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 setupIonicReact({
   mode: 'md'
@@ -20,6 +20,9 @@ function Login() {
         <h1 style={{
           marginTop: "25%"
         }}>Sign Up</h1>
+        <img style={{
+          width: "60%"
+        }} src='./image1.png' />
         <IonList style={{
           margin: "auto",
           padding: "0",
@@ -40,7 +43,11 @@ function Login() {
             <IonInput onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} style={{
               fontSize: "1.2rem"
             }} labelPlacement="stacked" label="Password" />
-            <ion-icon style={{ fontSize: "1.1rem" }} onClick={() => { setShowPassword(showPassword => !showPassword) }} name={!showPassword ? "eye-outline" : "eye-off-outline"}></ion-icon>
+            <button style={{
+              background: "none",
+              outline: "none",
+              border: "none"
+            }} onClick={() => { setShowPassword(showPassword => !showPassword) }} >{showPassword ? <FaEyeSlash style={{ fontSize: "1.1rem", color: 'gray' }} /> : <FaEye style={{ fontSize: "1.1rem", color: 'gray' }} />}</button>
           </IonItem>
 
           <IonButton onClick={async () => {

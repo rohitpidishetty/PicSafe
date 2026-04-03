@@ -1,14 +1,18 @@
 import { Directory, Filesystem } from '@capacitor/filesystem'
-import { IonHeader, IonImg, IonLoading, IonPage, IonTitle, IonToast, IonToolbar, useIonLoading, IonFooter, IonButton, IonButtons } from '@ionic/react';
-import React, { useEffect, useState } from 'react'
+import { IonHeader, IonImg, IonLoading, IonPage, IonTitle, IonToast, IonToolbar, useIonLoading, IonFooter, IonButton, IonButtons, IonCard } from '@ionic/react';
+import React, { useEffect, useRef, useState } from 'react'
 import "./Layout.css";
 import { useNavigate } from 'react-router-dom';
+import { FaCamera } from 'react-icons/fa';
 
 function Storage() {
+
+  const cachedImages = { current: null };
 
   const [images, setImages] = useState([]);
   const [state, setState] = useState(false);
   const [loading, setLoading] = useState(true);
+  const loaded = useRef(false);
 
   const navigate = useNavigate();
   const [present, dismiss] = useIonLoading();
@@ -19,6 +23,11 @@ function Storage() {
   }
 
   async function fetchFiles() {
+    if (cachedImages.current) {
+      setImages(cachedImages.current);
+      setLoading(false);
+      return;
+    }
 
     try {
       const dir = await Filesystem.readdir({
@@ -37,6 +46,7 @@ function Storage() {
         }
       }
       temp.sort((a, b) => b.tstamp - a.tstamp);
+      cachedImages.current = temp;
       // setImages(temp);
       // setState(true);
       return temp;
@@ -48,21 +58,28 @@ function Storage() {
   }
 
 
+
   useEffect(() => {
+    if (!loaded.current) {
+      loaded.current = true;
 
-    fetchFiles().then((images) => {
-      setImages(images);
-      setState(true);
-      setLoading(false);
-    }).catch((err) => {
-      alert(err)
-    });
+      fetchFiles().then((images) => {
+        setImages(images);
+        setState(true);
+        setLoading(false);
+      }).catch((err) => {
+        alert(err)
+      });
 
+    }
   }, [])
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar style={{
+          '--background': '#3880FF',
+          '--color': 'white'
+        }}>
           <IonTitle>
             PicSafe
           </IonTitle>
@@ -87,6 +104,18 @@ function Storage() {
           display(image.img, image.name);
           // console.log(image)
         }} className='image' key={key} src={image.img} />)}
+        {!loading && state && images.length === 0 && <center>
+
+          <IonCard className='info' style={{
+            width: "70%",
+            position: "unset"
+          }}>
+            <p style={{
+              padding: "2%",
+              fontSize: "1.2rem"
+            }}>Your gallery is empty</p>
+          </IonCard>
+        </center>}
 
       </div>
 
@@ -97,7 +126,7 @@ function Storage() {
         <IonToolbar>
           <IonButtons className='bar'>
             <IonButton onClick={() => { navigate("/main") }} className='btn'>
-              <ion-icon name="camera-outline"></ion-icon>
+              <FaCamera className='icons' />
             </IonButton>
           </IonButtons>
         </IonToolbar>

@@ -6,6 +6,11 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
 import "./Layout.css";
+import { MdDeleteOutline } from 'react-icons/md';
+import { IoIosInformationCircle, IoMdShare } from 'react-icons/io';
+import { FaInfo } from 'react-icons/fa';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
+import { CiCircleInfo } from 'react-icons/ci';
 
 setupIonicReact({
   mode: 'md'
@@ -85,21 +90,24 @@ function Picture() {
         path: name.replace(".sgpic", ".meta"),
         directory: Directory.Documents
       })
-      alert("Delete");
+      alert("Deleted");
     } catch (err) { alert("Image not found") }
   }
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar style={{
+          '--background': '#3880FF',
+          '--color': 'white'
+        }}>
           <IonTitle>
             PicSafe
           </IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      {infoAvailable && <div className='info'>
+      {infoAvailable && <div className='info details'>
         <p>{info.city}</p>
         <p>{info.country}</p>
         <p>{info.road}</p>
@@ -117,19 +125,20 @@ function Picture() {
 
           <IonButtons className='bar'>
             <IonButton onClick={deleteFile} className='btn'>
-              <ion-icon name="trash-outline"></ion-icon>
+              <MdDeleteOutline className='icons' />
             </IonButton>
 
             <IonButton onClick={share} className='btn'>
-              <ion-icon name="share-social-outline"></ion-icon>
+              <IoMdShare className='icons' />
             </IonButton>
 
             <IonButton onClick={details} className='btn'>
-              <ion-icon name="information-circle-outline"></ion-icon>
+
+              <IoIosInformationCircle className='icons' />
             </IonButton>
 
             <IonButton onClick={() => { navigate("/gallery-store") }} className='btn'>
-              <ion-icon name="chevron-back-circle-outline"></ion-icon>
+              <IoArrowBackCircleOutline className='icons' />
             </IonButton>
           </IonButtons>
 

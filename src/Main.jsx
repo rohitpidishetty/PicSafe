@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonBadge, IonButton, IonButtons, IonCard, IonFooter, IonHeader, IonImg, IonItemOption, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { v4 as uuid } from 'uuid';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./Layout.css";
 import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import { Geolocation } from '@capacitor/geolocation';
+import { GrGallery } from 'react-icons/gr';
+import { FaCamera } from 'react-icons/fa';
+import { Capacitor } from '@capacitor/core';
 
 setupIonicReact({
   mode: 'md'
@@ -44,31 +46,60 @@ function Main() {
         source: CameraSource.Camera
       });
 
+
+
       if (response.base64String !== null && response.base64String.length !== 0) {
         try {
-
-          const coords = await getLocation();
-          const payload = {
-            lat: coords?.latitude || null,
-            lon: coords?.longitude || null,
-            timestamp: Date.now()
+          if (Capacitor.isNativePlatform()) {
+            const coords = await getLocation();
+            const payload = {
+              lat: coords?.latitude || null,
+              lon: coords?.longitude || null,
+              timestamp: Date.now()
+            }
+            const UID = uuid();
+            await Filesystem.writeFile({
+              path: `.${UID}.sgpic`,
+              data: response.base64String,
+              directory: Directory.Documents
+            })
+            await Filesystem.writeFile({
+              path: `.${UID}.meta`,
+              data: btoa(JSON.stringify(payload)),
+              directory: Directory.Documents
+            })
+            alert("Saved");
           }
-          const UID = uuid();
-          await Filesystem.writeFile({
-            path: `.${UID}.sgpic`,
-            data: response.base64String,
-            directory: Directory.Documents
-          })
+          else {
+            const coords = { latitude: null, longitude: null };
+            navigator.geolocation.getCurrentPosition(async (c) => {
+              coords.latitude = c.coords.latitude;
+              coords.longitude = c.coords.longitude;
+              const payload = {
+                lat: coords?.latitude || null,
+                lon: coords?.longitude || null,
+                timestamp: Date.now()
+              }
+              const UID = uuid();
+              await Filesystem.writeFile({
+                path: `.${UID}.sgpic`,
+                data: response.base64String,
+                directory: Directory.Documents
+              })
+              await Filesystem.writeFile({
+                path: `.${UID}.meta`,
+                data: btoa(JSON.stringify(payload)),
+                directory: Directory.Documents
+              })
+              alert("Saved");
+              navigation("/gallery-store")
+            })
+          }
 
-          await Filesystem.writeFile({
-            path: `.${UID}.meta`,
-            data: btoa(JSON.stringify(payload)),
-            directory: Directory.Documents
-          })
-          alert("Saved");
 
 
-          navigation("/gallery-store")
+
+          // navigation("/gallery-store")
         } catch (err) {
           console.log(err)
           alert("Try again");
@@ -82,17 +113,24 @@ function Main() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>
+      <IonHeader >
+        <IonToolbar style={{
+          '--background': '#3880FF',
+          '--color': 'white'
+        }}>
+          <IonTitle >
             PicSafe
           </IonTitle>
         </IonToolbar>
       </IonHeader>
       <center>
+        <img style={{
+          width: "92%"
+        }} src='./image.png' />
 
-        <IonCard style={{
-          width: "70%"
+        <IonCard className='info' style={{
+          width: "70%",
+          position: "unset"
         }}>
           <p style={{
             padding: "2%",
@@ -102,6 +140,7 @@ function Main() {
             PicSafe lets you click images and store them securely, away from prying eyes.
             Your photos stay private, organized, and accessible only to you, a personal space for everything you want to keep confidential.</p>
         </IonCard>
+
       </center>
       <IonFooter style={{
         bottom: 0,
@@ -110,10 +149,11 @@ function Main() {
         <IonToolbar>
           <IonButtons className='bar'>
             <IonButton onClick={() => navigation("/gallery-store")} className='btn'>
-              <ion-icon name="image-outline"></ion-icon>
+
+              <GrGallery className='icons' />
             </IonButton>
             <IonButton onClick={clickPhoto} className='btn'>
-              <ion-icon name="camera-outline"></ion-icon>
+              <FaCamera className='icons' />
             </IonButton>
           </IonButtons>
         </IonToolbar>
