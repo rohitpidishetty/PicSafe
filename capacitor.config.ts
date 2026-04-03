@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.ring.app',
-  appName: 'ring',
+  appId: 'com.picsafe.app',
+  appName: 'picsafe',
   webDir: 'build'
 };
 
