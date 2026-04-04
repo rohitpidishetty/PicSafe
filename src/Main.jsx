@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonBadge, IonButton, IonButtons, IonCard, IonFooter, IonHeader, IonImg, IonItemOption, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 import { v4 as uuid } from 'uuid';
@@ -8,8 +8,9 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import { Geolocation } from '@capacitor/geolocation';
 import { GrGallery } from 'react-icons/gr';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera, FaLock } from 'react-icons/fa';
 import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
 setupIonicReact({
   mode: 'md'
@@ -36,6 +37,20 @@ function Main() {
   }
 
   async function clickPhoto() {
+
+    try {
+      const file = await Filesystem.readFile({
+        path: '.user_picSafe_cred.txt',
+        directory: Directory.Data
+      });
+    }
+    catch (err) {
+      const res = window.confirm("It is recommended to sign-up first & sign-in and then try taking pictures");
+      if (res) {
+        navigation("/signup")
+        return;
+      }
+    }
 
     try {
 
@@ -111,6 +126,36 @@ function Main() {
     }
   }
 
+
+
+  async function lock() {
+    await Preferences.set({ key: "lock", value: "true" });
+    try {
+      const file = await Filesystem.readFile({
+        path: '.user_picSafe_cred.txt',
+        directory: Directory.Data
+      });
+      navigation("/login")
+    }
+    catch (err) {
+      navigation("/signup")
+    }
+  }
+
+  useEffect(() => {
+    async function locked() {
+      let lock = await Preferences.get({ key: "lock" });
+      if (lock.value === null || lock.value === undefined) {
+        // No lock, setting lock status to FALSE
+        await Preferences.set({ key: "lock", value: "false" });
+      }
+      lock = await Preferences.get({ key: "lock" });
+      if (lock.value === 'true') setTimeout(() => navigation("/login"), 0);
+    }
+    locked();
+  }, [])
+
+
   return (
     <IonPage>
       <IonHeader >
@@ -154,6 +199,9 @@ function Main() {
             </IonButton>
             <IonButton onClick={clickPhoto} className='btn'>
               <FaCamera className='icons' />
+            </IonButton>
+            <IonButton onClick={lock} className='btn'>
+              <FaLock className='icons' />
             </IonButton>
           </IonButtons>
         </IonToolbar>

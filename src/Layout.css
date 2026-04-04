@@ -12,6 +12,15 @@
 }
 
 
+.toggle {
+  border: none;
+  outline: none;
+  background-color: #fff;
+  color: gray;
+  margin-right: 4%;
+  font-size: 1.0rem;
+}
+
 .bar {
   justify-content: space-around;
 }

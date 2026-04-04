@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IonButton, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonNavLink, IonPage, IonTitle, IonToolbar, setupIonicReact, useIonLoading } from '@ionic/react';
 import { useNavigate } from 'react-router-dom';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Preferences } from '@capacitor/preferences';
 
 setupIonicReact({
   mode: 'md'
@@ -17,34 +18,33 @@ function Login() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  useEffect(() => {
+    async function permit() {
+      const perm = await Filesystem.requestPermissions();
+      if (perm.publicStorage !== 'granted') {
+        alert("No permissions")
+        return;
+      }
+    }
+    permit();
+  }, [])
+
   const signIn = async () => {
     if (!email || !password) return;
-    if (email === "google.tester@picsafe.pic" && password === "test") {
-      await Filesystem.writeFile({
-        path: ".user_picSafe_cred.txt",
-        data: btoa(JSON.stringify({ name: "google", email: email, password: password })),
-        directory: Directory.Data
-      })
-      await dismiss()
-      navigate("/main");
-      return;
-    }
     try {
       const file = await Filesystem.readFile({
         path: '.user_picSafe_cred.txt',
         directory: Directory.Data
       });
-      if (!file) {
-        alert("No user present, kindly sign up first")
-        return;
-      }
+
       const user = JSON.parse(atob(file.data))
-      if (email !== user.email || password != user.password) {
+      if (password != user.password) {
         alert("Invalid credentials");
         return;
       }
       await dismiss()
-      navigate("/main");
+      await Preferences.set({ key: "lock", value: "false" });
+      setTimeout(() => navigate("/main"), 0);
     } catch (err) {
       alert("Try again, or sign up again");
     }
@@ -68,20 +68,25 @@ function Login() {
           width: "80%",
           marginTop: "15%"
         }}>
-          <IonItem>
-            <IonInput onChange={(e) => setEmail(e.target.value)} style={{
-              fontSize: "1.2rem"
-            }} labelPlacement="stacked" label="Email" />
-          </IonItem>
           <IonItem >
-            <IonInput onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} style={{
-              fontSize: "1.2rem"
-            }} labelPlacement="stacked" label="Password" />
-            <button style={{
-              background: "none",
-              outline: "none",
-              border: "none"
-            }} onClick={() => { setShowPassword(showPassword => !showPassword) }} >{showPassword ? <FaEyeSlash style={{ fontSize: "1.1rem", color: 'gray' }} /> : <FaEye style={{ fontSize: "1.1rem", color: 'gray' }} />}</button>
+            <IonLabel position="stacked">Email</IonLabel>
+            <input
+              onChange={(e) => {
+                setEmail(e.target.value || "")
+              }}
+              style={{ fontSize: "1.2rem", border: "none", outline: "none" }}
+            />
+          </IonItem>
+
+          <IonItem >
+            <IonLabel position="stacked">Password</IonLabel>
+            <input
+              onChange={(e) => {
+                setPassword(e.target.value || "")
+              }}
+              type={showPassword ? 'text' : 'password'}
+              style={{ fontSize: "1.2rem", border: "none", outline: "none" }}
+            />
           </IonItem>
           <div style={{
             display: "block",
@@ -89,6 +94,7 @@ function Login() {
             marginTop: "5%",
             textAlign: "right",
           }}>
+            <button className='toggle' onClick={() => setShowPassword(!showPassword)}> {!showPassword ? <FaEye /> : <FaEyeSlash />}</button>
             <a style={{
               color: "blue",
             }}>Forgot password?</a>

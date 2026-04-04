@@ -17,8 +17,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<Main />} />
         <Route path='/main' element={<Main />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/gallery-store' element={<Storage />} />
         <Route path='/picture' element={<Picture />} />
         <Route path='/signup' element={<SignUp />} />

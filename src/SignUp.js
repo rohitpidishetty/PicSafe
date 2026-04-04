@@ -30,17 +30,17 @@ function Login() {
           marginTop: "15%"
         }}>
           <IonItem>
-            <IonInput onChange={(e) => setName(e.target.value)} style={{
+            <IonInput onIonChange={(e) => setName(e.target.value)} style={{
               fontSize: "1.2rem"
             }} labelPlacement="stacked" label="Name" />
           </IonItem>
           <IonItem>
-            <IonInput onChange={(e) => setEmail(e.target.value)} style={{
+            <IonInput onIonChange={(e) => setEmail(e.target.value)} style={{
               fontSize: "1.2rem"
             }} labelPlacement="stacked" label="Email" />
           </IonItem>
           <IonItem>
-            <IonInput onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} style={{
+            <IonInput onIonChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} style={{
               fontSize: "1.2rem"
             }} labelPlacement="stacked" label="Password" />
             <button style={{
@@ -54,13 +54,50 @@ function Login() {
             if (name === null || email === null || password === null) return;
             try {
 
-              await Filesystem.writeFile({
-                path: ".user_picSafe_cred.txt",
-                data: btoa(JSON.stringify({ name: name, email: email, password: password })),
-                directory: Directory.Data
-              })
-              alert("You can log in now, dont forget your password, it is very unlikely to be recovered")
+              const response = window.confirm("Signing up will erase all your data, are you sure you want to sign up ?")
+
+              const perm = await Filesystem.requestPermissions();
+              if (perm.publicStorage !== 'granted') {
+                alert("No permissions")
+                return;
+              }
+              if (response) {
+
+                try {
+
+                  const files = await Filesystem.readdir({
+                    path: '.',
+                    directory: Directory.Documents
+                  });
+
+                  const deletePromises = files.files.map((file) => {
+                    return Filesystem.deleteFile({
+                      path: file.name,
+                      directory: Directory.Documents
+                    });
+                  });
+                  var n = deletePromises.length / 2;
+                  if (n === 1) alert(`Deleting ${n} photo`);
+                  else alert(`Deleting all ${n} photos`);
+                  await Promise.all(deletePromises);
+                } catch (err) {
+
+                }
+
+
+                await Filesystem.writeFile({
+                  path: ".user_picSafe_cred.txt",
+                  data: btoa(JSON.stringify({ name: name, email: email, password: password })),
+                  directory: Directory.Data
+                });
+
+                alert("You can log in now, dont forget your password, it is very unlikely to be recovered");
+                setTimeout(() => navigate("/login"), 0);
+                return;
+              }
+
             } catch (err) {
+              console.log(err)
               alert("Retry logging in later")
             }
 
