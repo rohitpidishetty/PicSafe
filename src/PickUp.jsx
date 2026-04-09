@@ -12,4 +12,4 @@ function PickUp({ audRef, ringRef, ring }) {
   )
 }
 
-export default PickUp
+export default PickUp;
