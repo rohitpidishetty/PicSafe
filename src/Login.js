@@ -27,29 +27,42 @@ function Login() {
       }
     }
     permit();
-  }, [])
+  }, []);
+
+
+  function testing(em, pw) {
+    return em === "google.tester@picsafe.pic" && pw === "test";
+  }
 
   const signIn = async () => {
     if (!email || !password) return;
-    try {
-      const file = await Filesystem.readFile({
-        path: '.user_picSafe_cred.txt',
-        directory: Directory.Data
-      });
-
-      const user = JSON.parse(atob(file.data))
-      if (password != user.password) {
-        alert("Invalid credentials");
-        return;
-      }
-      await dismiss()
-      await Preferences.set({ key: "lock", value: "false" });
-      setTimeout(() => navigate("/main"), 0);
-    } catch (err) {
-      alert("Try again, or sign up again");
+    if (testing(email, password)) {
+      // Google testing
+      alert("Locked, hope you are happy seeing this silly option!!\nIts working yaayyyy !!!");
+      await dismiss();
+      navigate("/main");
     }
-    finally {
-      await dismiss()
+    else {
+      try {
+        const file = await Filesystem.readFile({
+          path: '.user_picSafe_cred.txt',
+          directory: Directory.Data
+        });
+
+        const user = JSON.parse(atob(file.data))
+        if (password != user.password) {
+          alert("Invalid credentials");
+          return;
+        }
+        await dismiss()
+        await Preferences.set({ key: "lock", value: "false" });
+        setTimeout(() => navigate("/main"), 0);
+      } catch (err) {
+        alert("Try again, or sign up again");
+      }
+      finally {
+        await dismiss()
+      }
     }
   }
 

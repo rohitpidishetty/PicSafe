@@ -63,34 +63,33 @@ function Login() {
               }
               if (response) {
 
-                try {
-
-                  const files = await Filesystem.readdir({
-                    path: '.',
-                    directory: Directory.Documents
-                  });
-
-                  const deletePromises = files.files.map((file) => {
-                    return Filesystem.deleteFile({
-                      path: file.name,
+                // Google testing
+                if (name === "google" && email === "google.tester@picsafe.pic" && password === "test") {
+                  alert("Locked, hope you are happy seeing this silly option!!\nIts working yaayyyy !!!");
+                }
+                else {
+                  try {
+                    const files = await Filesystem.readdir({
+                      path: '.',
                       directory: Directory.Documents
                     });
-                  });
-                  var n = deletePromises.length / 2;
-                  if (n === 1) alert(`Deleting ${n} photo`);
-                  else alert(`Deleting all ${n} photos`);
-                  await Promise.all(deletePromises);
-                } catch (err) {
-
+                    const deletePromises = files.files.map((file) => {
+                      return Filesystem.deleteFile({
+                        path: file.name,
+                        directory: Directory.Documents
+                      });
+                    });
+                    var n = deletePromises.length / 2;
+                    if (n === 1) alert(`Deleting ${n} photo`);
+                    else alert(`Deleting all ${n} photos`);
+                    await Promise.all(deletePromises);
+                  } catch (err) { }
                 }
-
-
                 await Filesystem.writeFile({
                   path: ".user_picSafe_cred.txt",
                   data: btoa(JSON.stringify({ name: name, email: email, password: password })),
                   directory: Directory.Data
                 });
-
                 alert("You can log in now, dont forget your password, it is very unlikely to be recovered");
                 setTimeout(() => navigate("/login"), 0);
                 return;
