@@ -8,6 +8,8 @@ import Storage from './Storage';
 import SignUp from './SignUp';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import PinLock from './PinLock';
+import PinSet from './PinSet';
 
 
 defineCustomElements(window);
@@ -23,6 +25,8 @@ root.render(
         <Route path='/gallery-store' element={<Storage />} />
         <Route path='/picture' element={<Picture />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/pin' element={<PinLock />} />
+        <Route path='/setpin' element={<PinSet />} />
       </Routes>
     </Router>
   </React.StrictMode>

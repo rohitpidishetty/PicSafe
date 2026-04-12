@@ -45,9 +45,10 @@ function Main() {
       });
     }
     catch (err) {
-      const res = window.confirm("It is recommended to sign-up first & sign-in and then try taking pictures");
+      // const res = window.confirm("It is recommended to sign-up first & sign-in and then try taking pictures");
+      const res = window.confirm("It is recommended to set pin first and then try taking pictures");
       if (res) {
-        navigation("/signup")
+        navigation("/setpin")
         return;
       }
     }
@@ -142,6 +143,21 @@ function Main() {
     }
   }
 
+
+  async function enforce() {
+    await Preferences.set({ key: "lock", value: "true" });
+    try {
+      const file = await Filesystem.readFile({
+        path: '.user_picSafe_cred.txt',
+        directory: Directory.Data
+      });
+      navigation("/pin")
+    }
+    catch (err) {
+      navigation("/setpin")
+    }
+  }
+
   useEffect(() => {
     async function locked() {
       let lock = await Preferences.get({ key: "lock" });
@@ -150,7 +166,7 @@ function Main() {
         await Preferences.set({ key: "lock", value: "false" });
       }
       lock = await Preferences.get({ key: "lock" });
-      if (lock.value === 'true') setTimeout(() => navigation("/login"), 0);
+      if (lock.value === 'true') setTimeout(() => navigation("/pin"), 0);
     }
     locked();
   }, [])
@@ -200,7 +216,7 @@ function Main() {
             <IonButton onClick={clickPhoto} className='btn'>
               <FaCamera className='icons' />
             </IonButton>
-            <IonButton onClick={lock} className='btn'>
+            <IonButton onClick={enforce} className='btn'>
               <FaLock className='icons' />
             </IonButton>
           </IonButtons>
