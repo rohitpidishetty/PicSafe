@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# PicSafe (Visite)[http://play.google.com/store/apps/details?id=com.picsafe.ps&pcampaignid=web_share]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+At PicSafe, I am building a secure, privacy-first image storage and sharing platform designed for a world where personal data protection actually matters. The goal is simple: your images should belong only to you and the people you choose to share them with—nothing more, nothing less.
 
-## Available Scripts
+I’ve focused this system around three principles: **security, performance, and simplicity**. Every design decision in PicSafe reflects that.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## What PicSafe Solves
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Modern cloud storage platforms often trade privacy for convenience. PicSafe changes that.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+We provide:
+- Secure, encrypted image storage
+- Fine-grained access control for sharing
+- Fast, reliable retrieval across devices
+- A clean and intuitive user experience
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Core Features
 
-### `npm run build`
+- End-to-end secure image storage with encryption
+- Role-based authentication and authorization
+- Private and shareable albums with controlled access links
+- High-performance image upload and retrieval pipeline
+- Smart search and filtering for large galleries
+- Cross-device synchronization
+- Mobile-first responsive UI
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## System Philosophy
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+PicSafe is designed with a security-first architecture:
 
-### `npm run eject`
+- Data is encrypted before storage and protected in transit
+- Authentication is handled via secure token-based systems (JWT)
+- Access control is enforced at the API layer, not just the UI
+- Storage is abstracted to support scalable cloud providers
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+We intentionally chose a stack that balances scalability and developer velocity:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Frontend**
+- React.js
+- Modern JavaScript (ES6+)
+- Responsive UI with modular components
 
-## Learn More
+**Storage & Infrastructure**
+- Local file system
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Native APIs**
+- Capacitor plugins
+- Filesytem API
+- 
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Getting Started
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+git clone https://github.com/rohitpidishetty/picsafe.git
+cd picsafe
+npm install
+```
