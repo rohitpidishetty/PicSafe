@@ -1,4 +1,5 @@
-# PicSafe (Visite)[http://play.google.com/store/apps/details?id=com.picsafe.ps&pcampaignid=web_share]
+# PicSafe 
+## Download app [Google Play Store](http://play.google.com/store/apps/details?id=com.picsafe.ps&pcampaignid=web_share)
 
 At PicSafe, I am building a secure, privacy-first image storage and sharing platform designed for a world where personal data protection actually matters. The goal is simple: your images should belong only to you and the people you choose to share them with—nothing more, nothing less.
 
@@ -62,7 +63,11 @@ We intentionally chose a stack that balances scalability and developer velocity:
 ## Getting Started
 
 ```bash
-git clone https://github.com/rohitpidishetty/picsafe.git
+git clone https://github.com/rohitpidishetty/PicSafe.git
 cd picsafe
 npm install
+npm run build
+npx cap init
+npx cap sync android
+npx cap open android
 ```
