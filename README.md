@@ -1,7 +1,7 @@
 # PicSafe 
-## Download app [Google Play Store](http://play.google.com/store/apps/details?id=com.picsafe.ps&pcampaignid=web_share)
+## Download app from [Google Play Store](http://play.google.com/store/apps/details?id=com.picsafe.ps&pcampaignid=web_share)
 
-At PicSafe, I am building a secure, privacy-first image storage and sharing platform designed for a world where personal data protection actually matters. The goal is simple: your images should belong only to you and the people you choose to share them with—nothing more, nothing less.
+At PicSafe, I am building a secure, privacy-first image storage and sharing platform designed for a world where personal data protection actually matters. The goal is simple: your images should belong only to you and the people you choose to share them with-nothing more, nothing less.
 
 I’ve focused this system around three principles: **security, performance, and simplicity**. Every design decision in PicSafe reflects that.
 
