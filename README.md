@@ -22,10 +22,8 @@ We provide:
 ## Core Features
 
 - End-to-end secure image storage with encryption
-- Role-based authentication and authorization
 - Private and shareable albums with controlled access links
 - High-performance image upload and retrieval pipeline
-- Smart search and filtering for large galleries
 - Cross-device synchronization
 - Mobile-first responsive UI
 
@@ -36,9 +34,7 @@ We provide:
 PicSafe is designed with a security-first architecture:
 
 - Data is encrypted before storage and protected in transit
-- Authentication is handled via secure token-based systems (JWT)
-- Access control is enforced at the API layer, not just the UI
-- Storage is abstracted to support scalable cloud providers
+- Storage is abstracted 
 
 ---
 
